@@ -12,7 +12,7 @@ RUN apt-get install -yq --no-install-recommends --fix-missing \
     python-tables i2c-tools libxslt-dev libxml2-dev python-lxml python-bs4 
 
 RUN apt-get install -yq --no-install-recommends --fix-missing \
-    ros-kinetic-ros-tutorials ros-kinetic-common-tutorials ros-kinetic-robot=1.3.2-0*
+    ros-kinetic-ros-tutorials ros-kinetic-common-tutorials ros-kinetic-robot
 
 RUN rm -rf /var/lib/apt/lists
 
