@@ -9,7 +9,7 @@ ENV INITSYSTEM="on" \
     TERM="xterm" \
     ROS_DISTRO="kinetic"
 
-RUN echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list \
+RUN echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list \
     && apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
 
 RUN apt-get clean && apt-get update && apt-get upgrade -y
