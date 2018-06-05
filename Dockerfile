@@ -22,8 +22,8 @@ RUN apt-get install -yq --no-install-recommends --fix-missing \
 
 # Python Dependencies
 RUN apt-get install -yq --no-install-recommends --fix-missing \
-    python-dev python-pip ipython python-sklearn python-smbus python-termcolor python-frozendict \
-    python-tables i2c-tools libxslt-dev libxml2-dev python-lxml python-bs4 python-enum python-rpi.gpio    
+    python-dev python-pip ipython python-sklearn python-smbus python-termcolor python-rpi.gpio \
+    python-tables i2c-tools libxslt-dev libxml2-dev python-lxml python-bs4 python-enum
 
 # ROS dependencies
 RUN apt-get install -yq --no-install-recommends --fix-missing \
