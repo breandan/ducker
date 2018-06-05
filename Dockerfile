@@ -30,7 +30,7 @@ RUN pip install --upgrade --user \
 
 RUN git clone https://github.com/duckietown/software /home/
 
-RUN source /opt/ros/kinetic/setup.bash && catkin_make -C /home/software/catkin_ws/
+RUN /bin/bash -c "source /opt/ros/kinetic/setup.bash && catkin_make -C /home/software/catkin_ws/"
 
 RUN echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 
