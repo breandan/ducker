@@ -1,4 +1,4 @@
-FROM arm32v7/ros:kinetic-perception-xenial
+FROM maidbot/resin-raspberrypi3-qemu
 
 RUN apt-get clean && apt-get update && apt-get upgrade -y
 
