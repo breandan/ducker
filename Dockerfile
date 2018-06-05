@@ -48,8 +48,8 @@ RUN ln -s /usr/lib/arm-linux-gnueabihf/liblog4cxx.so /usr/lib/
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 
-RUN pip2 install --upgrade --user \
-    platformio wheel \
+RUN pip install --upgrade --user \
+    setuptools platformio wheel \
     PyContracts==1.7.15 \
     DecentLogs==1.1.2\
     QuickApp==1.3.8 \
@@ -59,7 +59,7 @@ RUN pip2 install --upgrade --user \
     pymongo==3.5.1 \
     ruamel.yaml==0.15.34
 
-RUN rosdep init && rosdep update
+RUN rosdep init && rosdep update; exit 0
 
 RUN git clone https://github.com/duckietown/software /home/
 
