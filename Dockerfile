@@ -1,4 +1,4 @@
-FROM arm32v7/ros:kinetic-perception-xenial
+FROM arm32v7/ros:kinetic-ros-base-xenial
 
 MAINTAINER Breandan Considine breandan.considine@nutonomy.com
 
@@ -17,24 +17,27 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources
 
 RUN apt-get clean && apt-get update && apt-get upgrade -y
 
+RUN apt-get install -yq --no-install-recommends --fix-missing \
+    ros-kinetic-robot=1.3.2-0* ros-kinetic-perception=1.3.2-0* \
+    ros-kinetic-navigation ros-kinetic-robot-localization
+
 # System dependencies
 RUN apt-get install -yq --no-install-recommends --fix-missing \
-    sudo locales locales-all \
+    sudo locales locales-all build-essential \
     etckeeper emacs vim byobu zsh git git-extras htop atop nethogs iftop apt-file ntpdate gfortran \
-    build-essential libblas-dev liblapack-dev libatlas-base-dev libyaml-cpp-dev libpcl-dev libvtk6-dev
+    libxslt-dev libxml2-dev \
+    libblas-dev liblapack-dev libatlas-base-dev libyaml-cpp-dev libpcl-dev libvtk6-dev libboost-all-dev
 
 # Python Dependencies
 RUN apt-get install -yq --no-install-recommends --fix-missing \
-    python-dev python-pip ipython python-sklearn python-smbus python-termcolor python-enum \
-    python-tables i2c-tools libxslt-dev libxml2-dev python-lxml python-bs4 libboost-all-dev
+    python-dev python-pip ipython python-sklearn python-smbus python-termcolor \
+    python-tables i2c-tools python-lxml python-bs4 python-openssl python-service-identity \
+    python-rosdep python-catkin-tools
 
-# ROS dependencies
+# ROS Dependencies
 RUN apt-get install -yq --no-install-recommends --fix-missing \
-    python-rosdep python-catkin-tools \
-    ros-kinetic-robot ros-kinetic-perception \
-    ros-kinetic-navigation ros-kinetic-robot-localization \
     ros-kinetic-roslint ros-kinetic-hector-trajectory-server \
-    ros-kinetic-ros-tutorials ros-kinetic-common-tutorials 
+    ros-kinetic-ros-tutorials ros-kinetic-common-tutorials
 
 # Cleanup packages list
 RUN apt-get clean && rm -rf /var/lib/apt/lists
@@ -45,8 +48,8 @@ RUN ln -s /usr/lib/arm-linux-gnueabihf/liblog4cxx.so /usr/lib/
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 
-RUN pip install --upgrade --user \
-    platformio \
+RUN pip2 install --upgrade --user \
+    platformio wheel \
     PyContracts==1.7.15 \
     DecentLogs==1.1.2\
     QuickApp==1.3.8 \
@@ -62,7 +65,7 @@ RUN git clone https://github.com/duckietown/software /home/
 
 COPY ./ros_entrypoint.sh .
 
-RUN /bin/bash -c "source /opt/ros/kinetic/setup.bash && catkin_make -C /home/software/catkin_ws/"
+RUN /bin/bash -c "source /opt/ros/kinetic/setup.bash && catkin_make -C /home/software/catkin_ws/"; exit 0
 
 RUN echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 
